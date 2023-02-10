@@ -37,7 +37,7 @@ public class Main {
 
     public static void crearTablas() {
 
-        try (Connection connection = Conexion.conectar()) {
+        try (Connection connection = ConexionSql.conectar()) {
             Statement statement = connection.createStatement();
 
             //Tabla Proyectos
@@ -144,7 +144,7 @@ public class Main {
     }
 
     public static void borrarTablas() {
-        try (Connection connection = Conexion.conectar()) {
+        try (Connection connection = ConexionSql.conectar()) {
 
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS Tags");
@@ -163,12 +163,12 @@ public class Main {
     }
 
     public static void crearBD() {
-        try (Connection connection = Conexion.conectar()) {
+        try (Connection connection = ConexionSql.conectar()) {
             Statement statement = connection.createStatement();
             DBName="FactoriaProyectos";
             statement.execute("CREATE DATABASE "+DBName+"");
-            if (!Conexion.getURL().contains(DBName)){
-                Conexion.setURL("/"+DBName);
+            if (!ConexionSql.getURL().contains(DBName)){
+                ConexionSql.setURL("/"+DBName);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -176,8 +176,8 @@ public class Main {
     }
 
     public static void addDB(){
-        if (!Conexion.getURL().contains(DBName)){
-            Conexion.setURL("/"+DBName);
+        if (!ConexionSql.getURL().contains(DBName)){
+            ConexionSql.setURL("/"+DBName);
         }
     }
 

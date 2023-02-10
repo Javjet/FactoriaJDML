@@ -6,7 +6,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class Conexion {
+public class ConexionSql {
 
     private static String URL = "jdbc:mysql://fp2.croh1mygfad5.eu-west-3.rds.amazonaws.com";
     private static final String URL_FINAL = URL;
@@ -37,7 +37,7 @@ public class Conexion {
     }
 
     public static void setURL(String DB) {
-        Conexion.URL =URL_FINAL+DB;
+        ConexionSql.URL =URL_FINAL+DB;
     }
 
 }

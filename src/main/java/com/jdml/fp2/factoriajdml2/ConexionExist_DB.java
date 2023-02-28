@@ -16,9 +16,13 @@ import static org.exist.security.utils.Utils.getOrCreateCollection;
 
 public class ConexionExist_DB {
 
-    private static String URI = "xmldb:exist://localhost:8181/exist/";
+    private static String URI = "xmldb:exist://localhost:8181/exist/fp";
+
+    static Collection collection = null;
 
     private static String user="admin";
+
+    private static String password="";
 
     /**
      * args[0] Should be the name of the collection to access
@@ -29,35 +33,18 @@ public class ConexionExist_DB {
         final String driver = "org.exist.xmldb.DatabaseImpl";
 
         // initialize database driver
-        Class cl = Class.forName(driver);
-        Database database = (Database) cl.newInstance();
-        database.setProperty("create-database", "true");
-        DatabaseManager.registerDatabase(database);
-        Collection col = null;
-        XMLResource res = null;
-        CollectionManagementService service = (CollectionManagementService)
-                col.getService("CollectionManagementService", "1.0");
         try {
 
-            service.createCollection("");
-            col=DatabaseManager.getCollection(URI);
+            Class cl = Class.forName(driver);
+            Database database = (Database) cl.newInstance();
+            DatabaseManager.registerDatabase(database);
+            collection = DatabaseManager.getCollection(URI,user,password);
 
-            // get the collection
-            col = DatabaseManager.getCollection(URI + "centros");
-            col.setProperty(OutputKeys.INDENT, "no");
-            res = (XMLResource)col.getResource("centrosFP2.xml");
-
-            if(res == null) {
-                System.out.println("document not found!");
-            } else {
-                System.out.println(res.getContent());
-            }
-
-            if (col==null){
+            if (collection==null){
                 System.out.println("La colección no existe");
             }else {
-                XPathQueryService xPathQueryService= (XPathQueryService) col.getService("XPathQueryService","1.0");
-                String query ="for $em in /EMPLEADOS/EMP_ROW[DEPT_NO=10] returen $em";
+                XPathQueryService xPathQueryService= (XPathQueryService) collection.getService("XPathQueryService","1.0");
+                String query ="for $em in /EMPLEADOS/EMP_ROW[DEPT_NO=10] return $em";
                 ResourceSet result =xPathQueryService.query(query);
                 ResourceIterator iterator=result.getIterator();
                 if (!iterator.hasMoreResources()){
@@ -67,20 +54,12 @@ public class ConexionExist_DB {
                     Resource resource=iterator.nextResource();
                     System.out.println((String) resource.getContent());
                 }
-                col.close();
+                collection.close();
             }
 
 
-        } finally {
-            //dont forget to clean up!
+        } catch (Exception e){
 
-            if(res != null) {
-                try { ((EXistResource)res).freeResources(); } catch(XMLDBException xe) {xe.printStackTrace();}
-            }
-
-            if(col != null) {
-                try { col.close(); } catch(XMLDBException xe) {xe.printStackTrace();}
-            }
         }
     }
 }

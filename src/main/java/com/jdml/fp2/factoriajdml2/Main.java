@@ -20,6 +20,8 @@ public class Main {
                 case 1 -> crearTablas();
                 case 2 -> borrarTablas();
                 case 3 -> crearBD();
+                case 4 -> insertarDatos();
+                case 5 -> modificarDatos();
                 case 0 -> System.out.println("Salir");
             }
         } while (opcion != 0);
@@ -31,6 +33,7 @@ public class Main {
         System.out.println("Crear tablas");
         System.out.println("Borrar tablas");
         System.out.println("Modificar Datos");
+        System.out.println("Insertar Datos");
         System.out.println("Salir");
         return sc.nextInt();
     }
@@ -179,6 +182,13 @@ public class Main {
         if (!ConexionSql.getURL().contains(DBName)){
             ConexionSql.setURL("/"+DBName);
         }
+    }
+
+    public static void insertarDatos(){
+        InsertarDatos.MenuInsercion();
+    }
+    public static void modificarDatos(){
+        ModificarDatos.MenuInsercion();
     }
 
 }

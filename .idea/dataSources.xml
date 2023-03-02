@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://fp2.croh1mygfad5.eu-west-3.rds.amazonaws.com:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="FactoriaProyectosFP2@localhost" uuid="6c57d679-9a5b-4a61-a590-0422e1b5d927">
+      <driver-ref>mongo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://localhost:27017</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

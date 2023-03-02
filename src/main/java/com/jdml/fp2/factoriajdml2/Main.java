@@ -1,5 +1,7 @@
 package com.jdml.fp2.factoriajdml2;
 
+import Conexiones.ConexionSql;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;

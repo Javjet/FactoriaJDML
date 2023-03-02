@@ -1,4 +1,4 @@
-package com.jdml.fp2.factoriajdml2;
+package Conexiones;
 
 import org.exist.storage.DBBroker;
 import org.exist.xmldb.EXistResource;

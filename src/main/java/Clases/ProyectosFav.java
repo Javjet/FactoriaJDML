@@ -19,6 +19,10 @@ public class ProyectosFav {
         return autoId;
     }
 
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
+    }
+
     public void setAutoId(Integer autoId) {
         this.autoId = autoId;
     }
@@ -27,12 +31,20 @@ public class ProyectosFav {
         return proyectoId;
     }
 
+    public void setProyectoId(int proyectoId) {
+        this.proyectoId = proyectoId;
+    }
+
     public void setProyectoId(Integer proyectoId) {
         this.proyectoId = proyectoId;
     }
 
     public Integer getIdUsuario() {
         return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void setIdUsuario(Integer idUsuario) {

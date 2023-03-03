@@ -47,9 +47,16 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO", nullable = false)
     private ProyectosFav proyectosFavByIdUsuario;
+    @Basic
+    @Column(name = "NombreUsuario")
+    private String nombreUsuario;
 
     public Integer getAutoId() {
         return autoId;
+    }
+
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
     }
 
     public void setAutoId(Integer autoId) {
@@ -60,12 +67,20 @@ public class Usuario {
         return idCentro;
     }
 
+    public void setIdCentro(int idCentro) {
+        this.idCentro = idCentro;
+    }
+
     public void setIdCentro(Integer idCentro) {
         this.idCentro = idCentro;
     }
 
     public Integer getIdUsuario() {
         return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void setIdUsuario(Integer idUsuario) {
@@ -114,6 +129,10 @@ public class Usuario {
 
     public Integer getFamiliaProfesional() {
         return familiaProfesional;
+    }
+
+    public void setFamiliaProfesional(int familiaProfesional) {
+        this.familiaProfesional = familiaProfesional;
     }
 
     public void setFamiliaProfesional(Integer familiaProfesional) {
@@ -197,5 +216,13 @@ public class Usuario {
 
     public void setProyectosFavByIdUsuario(ProyectosFav proyectosFavByIdUsuario) {
         this.proyectosFavByIdUsuario = proyectosFavByIdUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }

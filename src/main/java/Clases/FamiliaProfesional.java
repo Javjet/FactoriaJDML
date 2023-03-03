@@ -25,12 +25,20 @@ public class FamiliaProfesional {
         return autoId;
     }
 
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
+    }
+
     public void setAutoId(Integer autoId) {
         this.autoId = autoId;
     }
 
     public Integer getFamiliaProfesionalId() {
         return familiaProfesionalId;
+    }
+
+    public void setFamiliaProfesionalId(int familiaProfesionalId) {
+        this.familiaProfesionalId = familiaProfesionalId;
     }
 
     public void setFamiliaProfesionalId(Integer familiaProfesionalId) {

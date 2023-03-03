@@ -26,9 +26,16 @@ public class Centros {
     @ManyToOne
     @JoinColumn(name = "ID_CENTRO", referencedColumnName = "ID_Centro", nullable = false)
     private Usuario usuarioByIdCentro;
+    @Basic
+    @Column(name = "Activo")
+    private Byte activo;
 
     public Integer getAutoId() {
         return autoId;
+    }
+
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
     }
 
     public void setAutoId(Integer autoId) {
@@ -37,6 +44,10 @@ public class Centros {
 
     public Integer getIdCentro() {
         return idCentro;
+    }
+
+    public void setIdCentro(int idCentro) {
+        this.idCentro = idCentro;
     }
 
     public void setIdCentro(Integer idCentro) {
@@ -107,5 +118,13 @@ public class Centros {
 
     public void setUsuarioByIdCentro(Usuario usuarioByIdCentro) {
         this.usuarioByIdCentro = usuarioByIdCentro;
+    }
+
+    public Byte getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Byte activo) {
+        this.activo = activo;
     }
 }

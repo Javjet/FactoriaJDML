@@ -19,6 +19,10 @@ public class CentrosDeProyecto {
         return autoId;
     }
 
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
+    }
+
     public void setAutoId(Integer autoId) {
         this.autoId = autoId;
     }
@@ -27,12 +31,20 @@ public class CentrosDeProyecto {
         return proyectoId;
     }
 
+    public void setProyectoId(int proyectoId) {
+        this.proyectoId = proyectoId;
+    }
+
     public void setProyectoId(Integer proyectoId) {
         this.proyectoId = proyectoId;
     }
 
     public Integer getIdCentro() {
         return idCentro;
+    }
+
+    public void setIdCentro(int idCentro) {
+        this.idCentro = idCentro;
     }
 
     public void setIdCentro(Integer idCentro) {

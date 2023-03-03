@@ -22,6 +22,10 @@ public class Comentarios {
         return autoId;
     }
 
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
+    }
+
     public void setAutoId(Integer autoId) {
         this.autoId = autoId;
     }
@@ -30,12 +34,20 @@ public class Comentarios {
         return escritor;
     }
 
+    public void setEscritor(int escritor) {
+        this.escritor = escritor;
+    }
+
     public void setEscritor(Integer escritor) {
         this.escritor = escritor;
     }
 
     public Integer getProyectoId() {
         return proyectoId;
+    }
+
+    public void setProyectoId(int proyectoId) {
+        this.proyectoId = proyectoId;
     }
 
     public void setProyectoId(Integer proyectoId) {

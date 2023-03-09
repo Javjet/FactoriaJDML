@@ -36,7 +36,7 @@
         <dependency>
             <groupId>org.exist-db</groupId>
             <artifactId>exist-core</artifactId>
-            <version>5.0.0</version>
+            <version>6.2.0</version>
         </dependency>
         <dependency>
             <groupId>xml-apis</groupId>

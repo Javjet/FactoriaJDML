@@ -8,25 +8,31 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Main {
-    static String DBName=null;
+    static String DBName = null;
 
     final static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         int opcion;
-        do {
-            DBName="FactoriaProyectos";
-            addDB();
-            opcion = menu();
-            switch (opcion) {
-                case 1 -> crearTablas();
-                case 2 -> borrarTablas();
-                case 3 -> crearBD();
-                case 4 -> insertarDatos();
-                case 5 -> modificarDatos();
-                case 0 -> System.out.println("Salir");
-            }
-        } while (opcion != 0);
+
+
+        DBName = "/FactoriaProyectos";
+        try (Connection connection = ConexionSql.conectar(DBName)) {
+
+            do {
+                switch (opcion= menu()) {
+                    case 1 -> crearTablas(connection);
+                    case 2 -> borrarTablas(connection);
+                    case 3 -> crearBD(connection);
+                    case 4 -> insertarDatos(connection);
+                    case 5 -> modificarDatos(connection);
+                    case 0 -> System.out.println("Salir");
+                }
+
+            } while (opcion != 0);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
@@ -40,9 +46,9 @@ public class Main {
         return sc.nextInt();
     }
 
-    public static void crearTablas() {
+    public static void crearTablas(Connection connection) {
 
-        try (Connection connection = ConexionSql.conectar()) {
+        try  {
             Statement statement = connection.createStatement();
 
             //Tabla Proyectos
@@ -93,7 +99,7 @@ public class Main {
                     "Email varchar(40)," +
                     "Telefono int," +
                     "foreign key (Familia_Profesional) REFERENCES FamiliaProfesional(FAMILIA_PROFESIONAL_ID)," +
-                    "foreign key (ID_Centro) REFERENCES Centros(ID_CENTRO) ON DELETE CASCADE "+
+                    "foreign key (ID_Centro) REFERENCES Centros(ID_CENTRO) ON DELETE CASCADE " +
                     ")");
 
             //Tabla Participantes
@@ -116,7 +122,7 @@ public class Main {
                     "Proyecto_id int not null ," +
                     "Contenido varchar(20)," +
                     "foreign key (Escritor) REFERENCES Usuario(ID_USUARIO) ON DELETE CASCADE," +
-                    "foreign key (Proyecto_id) REFERENCES Proyectos(PROYECTO_ID) ON DELETE CASCADE"+
+                    "foreign key (Proyecto_id) REFERENCES Proyectos(PROYECTO_ID) ON DELETE CASCADE" +
                     ")");
 
             //Tabla Familia Profesional Implicada
@@ -156,8 +162,8 @@ public class Main {
         }
     }
 
-    public static void borrarTablas() {
-        try (Connection connection = ConexionSql.conectar()) {
+    public static void borrarTablas(Connection connection) {
+        try  {
 
             Statement statement = connection.createStatement();
             statement.execute("DROP TABLE IF EXISTS Tags");
@@ -175,30 +181,25 @@ public class Main {
         }
     }
 
-    public static void crearBD() {
-        try (Connection connection = ConexionSql.conectar()) {
+    public static void crearBD(Connection connection) {
+        try {
             Statement statement = connection.createStatement();
-            DBName="FactoriaProyectos";
-            statement.execute("CREATE DATABASE "+DBName+"");
-            if (!ConexionSql.getURL().contains(DBName)){
-                ConexionSql.setURL("/"+DBName);
-            }
+            DBName = "FactoriaProyectos";
+            statement.execute("CREATE DATABASE " + DBName + "");
+            /*if (!ConexionSql.getURL().contains(DBName)) {
+                ConexionSql.setURL("/" + DBName);
+            }*/
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static void addDB(){
-        if (!ConexionSql.getURL().contains(DBName)){
-            ConexionSql.setURL("/"+DBName);
-        }
-    }
 
-    public static void insertarDatos(){
+    public static void insertarDatos(Connection connection) {
         InsertarDatos.MenuInsercion();
     }
 
-    public void saveUser(UsuarioEntity user){
+    public void saveUser(UsuarioEntity user) {
         Transaction transaction = null;
 
     }
@@ -310,7 +311,7 @@ public class Main {
         ps.execute();
     }*/
 
-    public static void modificarDatos(){
+    public static void modificarDatos(Connection connection) {
         ModificarDatos.MenuInsercion();
     }
 

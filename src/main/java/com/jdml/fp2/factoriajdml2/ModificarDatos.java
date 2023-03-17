@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import static com.jdml.fp2.factoriajdml2.Main.DBName;
+
 public class ModificarDatos {
 
     final static Scanner sc = new Scanner(System.in);
@@ -32,7 +34,7 @@ public class ModificarDatos {
     }
 
     private static void ModificarCentro() {
-        try(Connection connection = ConexionSql.conectar()){
+        try(Connection connection = ConexionSql.conectar(DBName)){
             String  nombre=Leer.pedirCadena("Intoduce el nombre del centro: ");
             String  newnombre=Leer.pedirCadena("Intoduce el nuevo nombre del centro: ");
             String  newWeb=Leer.pedirCadena("Intoduce la nueva direccion web del centro(Si no tiene pon 0): ");
@@ -49,7 +51,7 @@ public class ModificarDatos {
     }
 
     private static void ModificarProyecto() {
-        try(Connection connection = ConexionSql.conectar()){
+        try(Connection connection = ConexionSql.conectar(DBName)){
             String  titulo=Leer.pedirCadena("Intoduce el nombre del centro: ");
             String  newtitulo=Leer.pedirCadena("Intoduce el nuevo nombre del centro: ");
             String  newdescripcion=Leer.pedirCadena("Intoduce la nueva direccion web del centro(Si no tiene pon 0): ");
@@ -71,7 +73,7 @@ public class ModificarDatos {
     }
 
     private static void ModificarUsuario() {
-        try(Connection connection = ConexionSql.conectar()){
+        try(Connection connection = ConexionSql.conectar(DBName)){
             String  nombre=Leer.pedirCadena("Intoduce el nombre del centro: ");
             String  newnombre=Leer.pedirCadena("Intoduce el nuevo nombre del centro: ");
             String  newapellidos=Leer.pedirCadena("Intoduce la nueva direccion web del centro(Si no tiene pon 0): ");

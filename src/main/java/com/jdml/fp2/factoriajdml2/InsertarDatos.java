@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import static com.jdml.fp2.factoriajdml2.Main.DBName;
+
 
 public class InsertarDatos {
     final static Scanner sc = new Scanner(System.in);
@@ -31,7 +33,7 @@ public class InsertarDatos {
         return sc.nextInt();
     }
     public static void InsertarCentro(){
-        try(Connection connection = ConexionSql.conectar()) {
+        try(Connection connection = ConexionSql.conectar(DBName)) {
             int  id_Centro=Leer.pedirEntero("Intoduce el identificador del centro: ");
             String  nombre=Leer.pedirCadena("Intoduce el nombre del centro: ");
             String  Web=Leer.pedirCadena("Intoduce la direccion web del centro(Si no tiene pon 0): ");
@@ -49,7 +51,7 @@ public class InsertarDatos {
         }
     }
     public static void InsertarProyecto(){
-        try(Connection connection = ConexionSql.conectar()) {
+        try(Connection connection = ConexionSql.conectar(DBName)) {
             int id_Proyecto=Leer.pedirEntero("Intoduce el Identificador del proyecto: ");
             String titulo=Leer.pedirCadena("Intoduce el Nombre del proyecto: ");
             String descripcion=Leer.pedirCadena("Intoduce la descripcion del proyecto: ");
@@ -73,7 +75,7 @@ public class InsertarDatos {
         }
     }
     public static void InsertarUsuario(){
-        try(Connection connection = ConexionSql.conectar()) {
+        try(Connection connection = ConexionSql.conectar(DBName)) {
             int id_centro=Leer.pedirEntero("Intoduce el identificador de centro: ");
             int id_usuario=Leer.pedirEntero("Intoduce el identificador de usuario: ");
             String nombre=Leer.pedirCadena("Intoduce tu nombre: ");

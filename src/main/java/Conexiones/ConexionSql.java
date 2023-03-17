@@ -13,19 +13,20 @@ public class ConexionSql {
     private static final String USER = "admin";
     private static final String passwd = "FP2%SanAlberto";
 
+    public ConexionSql() {
+    }
 
-
-    public static DataSource poolConexiones() {
+    public static DataSource poolConexiones(String DB) {
         BasicDataSource datos = new BasicDataSource();
-        datos.setUrl(URL);
+        datos.setUrl(URL+DB);
         datos.setUsername(USER);
         datos.setPassword(passwd);
         datos.setInitialSize(10);
         return datos;
     }
 
-    public static Connection conectar() throws SQLException {
-        return poolConexiones().getConnection();
+    public static Connection conectar(String DB) throws SQLException {
+        return poolConexiones(DB).getConnection();
     }
 
     public static String getURL() {
@@ -36,8 +37,6 @@ public class ConexionSql {
         return URL_FINAL;
     }
 
-    public static void setURL(String DB) {
-        ConexionSql.URL =URL_FINAL+DB;
-    }
+
 
 }

@@ -1,15 +1,8 @@
 package com.jdml.fp2.factoriajdml2;
 
-import Clases.Centros;
-import Clases.FamiliaProfesional;
-import Clases.Usuario;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import Clases.CentrosEntity;
+import Clases.FamiliaProfesionalEntity;
+import Clases.UsuarioEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -18,18 +11,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.engine.transaction.internal.TransactionImpl;
-import java.sql.*;
-import java.sql.Date;
 
 public class InsertarDatosHibernate {
     static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-    static Usuario usuario =null;
+    static UsuarioEntity usuario =null;
 
-    static Centros centros=null;
+    static CentrosEntity centros=null;
 
-    static FamiliaProfesional familia=null;
+    static FamiliaProfesionalEntity familia=null;
     public static void main(String[] args){
 
         EntityManagerFactory entityManagerFactory= Persistence.createEntityManagerFactory("default");
@@ -52,7 +42,7 @@ public class InsertarDatosHibernate {
         return factory;
     }*/
 
-    public static void insertUsuario(EntityTransaction transaction,Usuario usuario){
+    public static void insertUsuario(EntityTransaction transaction,UsuarioEntity usuario){
 
         try{
             transaction.begin();
@@ -69,7 +59,7 @@ public class InsertarDatosHibernate {
         }
     }
 
-    public static void insertCentros(EntityTransaction transaction,Centros centros){
+    public static void insertCentros(EntityTransaction transaction,CentrosEntity centros){
 
         try{
             transaction.begin();
@@ -86,7 +76,7 @@ public class InsertarDatosHibernate {
         }
     }
 
-    public static void insertCFamiliaPro(EntityTransaction transaction, FamiliaProfesional familia){
+    public static void insertCFamiliaPro(EntityTransaction transaction, FamiliaProfesionalEntity familia){
 
         try{
             transaction.begin();
@@ -103,9 +93,9 @@ public class InsertarDatosHibernate {
         }
     }
 
-    public static Centros crearCentro(){
+    public static CentrosEntity crearCentro(){
 
-        centros =new Centros();
+        centros =new CentrosEntity();
         centros.setActivo((byte) 1);
         centros.setIdCentro(1);
         centros.setNombre("IES San Alberto Magno");
@@ -114,16 +104,16 @@ public class InsertarDatosHibernate {
         return centros;
     }
 
-    public static FamiliaProfesional crearFamilia(){
+    public static FamiliaProfesionalEntity crearFamilia(){
 
-        familia =new FamiliaProfesional();
+        familia =new FamiliaProfesionalEntity();
         familia.setFamiliaProfesionalId(1);
         familia.setNombreFamilia("Fontanero");
         return familia;
     }
 
-    public static Usuario crearUsuario(){
-        usuario =new Usuario();
+    public static UsuarioEntity crearUsuario(){
+        usuario =new UsuarioEntity();
         String nombre;
         String apellidos;
         String email;

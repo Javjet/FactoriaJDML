@@ -1,15 +1,11 @@
 package com.jdml.fp2.factoriajdml2;
 
-import Clases.Usuario;
+import Clases.UsuarioEntity;
 import Conexiones.ConexionSql;
 import jakarta.transaction.Transaction;
-import org.hibernate.*;
-import org.hibernate.Session;
 
 import java.sql.*;
 import java.util.Scanner;
-
-import static com.jdml.fp2.factoriajdml2.InsertarDatosHibernate.sessionFactory;
 
 public class Main {
     static String DBName=null;
@@ -68,7 +64,7 @@ public class Main {
                     "AUTO_ID int not null auto_increment primary key," +
                     "ID_CENTRO int not null unique," +
                     "Nombre varchar(20)," +
-                    "Web varchar(20)," +
+                    "Web varchar(50)," +
                     "Contacto varchar(20)," +
                     "Activo BOOLEAN DEFAULT true)");
 
@@ -202,7 +198,7 @@ public class Main {
         InsertarDatos.MenuInsercion();
     }
 
-    public void saveUser(Usuario user){
+    public void saveUser(UsuarioEntity user){
         Transaction transaction = null;
 
     }
@@ -313,35 +309,6 @@ public class Main {
         ps.setInt(7,cod_Centro);
         ps.execute();
     }*/
-
-    public static void insertarProyecto(){
-
-    }
-
-    public static void insertarCentro(){
-
-    }
-    public static void insertarParticipante(){
-
-    }
-    public static void insertarComentario(){
-
-    }
-    public static void insertarUsuarioProyectosFav(){
-
-    }
-    public static void insertarFamiliaProfesionalImplicada(){
-
-    }
-    public static void insertarCentroDeProyecto(){
-
-    }
-    public static void insertarFamiliaProfesional(){
-
-    }
-    public static void insertarTags(){
-
-    }
 
     public static void modificarDatos(){
         ModificarDatos.MenuInsercion();

@@ -110,7 +110,7 @@ public class ConexionExist_DB {
             if (collection == null) {
                 System.out.println("La colección no existe");
             } else {
-
+            //Ejecucion de las queries para recuperar datos
                 for (int URIFile : ListaIdQueries) {
                     if (URIFile == 0){
                         bufferedWriter=new BufferedWriter(new FileWriter(centroXmls));
@@ -133,8 +133,9 @@ public class ConexionExist_DB {
                         bufferedWriter.write((String) resource.getContent());
 
                     }
+                    //Vuelco la informacion
                     bufferedWriter.flush();
-
+                    //Transformo la informacion en funcion del tipo de documento
                     if (URIFile == 0){
                         docParsed=docBuilder.parse(centroXmls);
                         //docParsed.setXmlVersion("1.0");

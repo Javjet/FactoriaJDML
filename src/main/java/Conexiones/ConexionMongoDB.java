@@ -1,18 +1,18 @@
 package Conexiones;
 
-import com.jdml.fp2.factoriajdml2.Leer;
+import CreacionInicialBDSQL.Leer;
 import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 import org.bson.Document;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import static com.mongodb.client.model.Filters.eq;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public class ConexionMongoDB {
     final static String uri = "mongodb://localhost:27017/?maxPoolSize=20&w=majority";
@@ -24,7 +24,7 @@ public class ConexionMongoDB {
         do {
             opcion = menu();
             switch (opcion) {
-                case 1 -> leerdatos();
+                case 1 -> leerDatosUsuarioProyecto();
                 case 2 -> insertardatos();
                 case 3 -> eliminardatos();
                 case 4 -> modificardatos();
@@ -42,11 +42,12 @@ public class ConexionMongoDB {
         return sc.nextInt();
     }
 
-    public static void leerdatos() {
+    public static void leerDatosUsuarioProyecto() {
         //este metodo nos permite mostrar por pantalla los nombres de los usuarios
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase db = mongoClient.getDatabase("FactoriaProyectosFP2");
             String nombre = Leer.pedirCadena("Intoduce el nombre del Proyecto que quieres leer: ");
+
             Iterable<Document> agProyectos = db.getCollection("Proyectos").aggregate(Arrays.asList(Aggregates.
                     lookup("Usuarios",nombre,"_id","datosUsuarios")));
             for (Document p:agProyectos){
@@ -112,4 +113,33 @@ public class ConexionMongoDB {
             System.out.println(e);
         }
     }
+/*
+    public static void MongoClases(){
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
+
+            CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
+            CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
+
+            MongoDatabase db = mongoClient.getDatabase("examen").withCodecRegistry( codecRegistry);;
+
+            MongoCollection<Empleado> Empleados = db.getCollection("empleados", Empleado.class);
+            MongoCollection<Departamento> departamentos = db.getCollection("departamentos", Departamento.class);
+
+            Departamento departamento = departamentos.find(eq("nombre", "Java Departamento")).first();
+            for (Departamento dep :departamentos.find()) {
+                System.out.println(dep.getId());
+            }
+
+            System.out.println(departamento.getId());
+            Empleado empleado=new Empleado();
+            empleado.setNombre("Hola Jordi");
+            empleado.setSalario(99.9);
+            empleado.setDepartamento_id(departamento.getId());
+            Empleados.insertOne(empleado);
+
+        } catch (MongoException e) {
+            System.out.println(e);
+        }
+    }*/
+
 }

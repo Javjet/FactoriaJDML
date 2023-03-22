@@ -64,14 +64,7 @@ public class ConexionExist_DB {
 
         // initialize database driver
 
-        /*Queries.put(0, "xquery version \"3.1\";" +
-                "let $Centros := doc(\"fp/CentrosCFGMyS.xml\")//*:Row" +
-                "\n" +
-                "return <centros> {\n" +
-                "    for $Centro in $Centros\n" +
-                "return <centro> {$Centro/*}</centro>} \n" +
-                "    \n" +
-                "</centros>");*/
+
         Queries.put(0,
                 "let $Centros := doc(\"CentrosCFGMyS.xml\")//*:Row\n" +
                         "return <centros> {\n" +

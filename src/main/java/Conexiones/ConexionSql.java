@@ -16,6 +16,8 @@ public class ConexionSql {
     public ConexionSql() {
     }
 
+    //Creacion del DataSource PoolConexiones necesario para lanzar la conexion a la base de datos, contiene la direccion
+    //a la base de datos, el nombre de usuario, la contraseña y el numero inicial de conexiones
     public static DataSource poolConexiones(String DB) {
         BasicDataSource datos = new BasicDataSource();
         datos.setUrl(URL+DB);
@@ -25,6 +27,7 @@ public class ConexionSql {
         return datos;
     }
 
+    //Conexion a la base de datos
     public static Connection conectar(String DB) throws SQLException {
         return poolConexiones(DB).getConnection();
     }
@@ -32,7 +35,6 @@ public class ConexionSql {
     public static String getURL() {
         return URL;
     }
-
     public static String getURLFinal() {
         return URL_FINAL;
     }

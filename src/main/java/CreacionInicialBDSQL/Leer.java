@@ -1,4 +1,4 @@
-package com.jdml.fp2.factoriajdml2;
+package CreacionInicialBDSQL;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

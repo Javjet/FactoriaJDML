@@ -11,15 +11,21 @@ public class SqlMain {
 
     final static Scanner sc = new Scanner(System.in);
 
+    //Metodo para crear la conexion
     public static void main(String[] args) {
         int opcion;
 
 
         DBName = "FactoriaProyectos";
-
+        System.out.println("Estableciendo Conexion...");
         try (Connection connection = ConexionSql.conectar("")) {
             crearBD(connection);
-            ConexionSql.conectar("/"+DBName);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try (Connection connection=ConexionSql.conectar("/"+DBName)) {
+            crearBD(connection);
+            System.out.println("Conexion Establecida");
             do {
                 switch (opcion = menu()) {
                     case 1 -> crearTablas(connection);
@@ -36,7 +42,6 @@ public class SqlMain {
             throw new RuntimeException(e);
         }
 
-
     }
 
     public static int menu() {
@@ -45,15 +50,15 @@ public class SqlMain {
         System.out.println("3. Insertar Datos (SQL)");
         System.out.println("4. Modificar Datos");
         System.out.println("5. Eliminar Datos");
-        System.out.println("Salir");
+        System.out.println("0. Salir");
         return sc.nextInt();
     }
 
+    //Metodo para crear tablas
     public static void crearTablas(Connection connection) {
 
         try {
             Statement statement = connection.createStatement();
-
             //Tabla Proyectos
             statement.execute("CREATE TABLE IF NOT EXISTS Proyectos (" +
                     "AUTO_ID int not null auto_increment primary key," +
@@ -166,10 +171,10 @@ public class SqlMain {
         }
     }
 
+    //Borrar tablas
     public static void borrarTablas(Connection connection) {
         try {
-            System.out.println("Introduzca \"BORRAR\" para eliminar todas las tablas");
-            if (sc.nextLine().equalsIgnoreCase( "BORRAR")) {
+            if (Leer.pedirCadena("Introduzca \"BORRAR\" para eliminar todas las tablas").equalsIgnoreCase( "BORRAR")) {
                 Statement statement = connection.createStatement();
                 statement.execute("DROP TABLE IF EXISTS Tags");
                 statement.execute("DROP TABLE IF EXISTS ProyectosFav");
@@ -181,6 +186,7 @@ public class SqlMain {
                 statement.execute("DROP TABLE IF EXISTS FamiliaProfesional");
                 statement.execute("DROP TABLE IF EXISTS Proyectos");
                 statement.execute("DROP TABLE IF EXISTS Centros");
+                System.out.println("La eliminacion de tablas se llevo a cabo");
             }else {
                 System.out.println("La eliminacion de tablas no se llevo a cabo");
             }
@@ -190,26 +196,27 @@ public class SqlMain {
         }
     }
 
+    //Crear BD
     public static void crearBD(Connection connection) {
         try {
             Statement statement = connection.createStatement();
-            statement.execute("CREATE DATABASE IF NOT EXISTS" + DBName + "");
+            statement.execute("CREATE DATABASE IF NOT EXISTS " + DBName + "");
         } catch (SQLException e) {
             System.out.println("La creacion de la base de datos no se llevo a cabo, error sql");
             e.printStackTrace();
         }
     }
 
-
-    public static void insertarDatos(Connection connection) {
+    //Metodos de insercion, modificacion y eliminacion de registros
+    public static void insertarDatos(Connection connection) throws SQLException {
         InsertarDatos.MenuInsercion(connection);
     }
 
 
-    public static void modificarDatos(Connection connection) {
+    public static void modificarDatos(Connection connection) throws SQLException {
         ModificarDatos.MenuInsercion(connection);
     }
 
-    public static void eliminarDatos(Connection connection){ EliminarDatos.MenuEliminacion(connection);}
+    public static void eliminarDatos(Connection connection) throws SQLException { EliminarDatos.MenuEliminacion(connection);}
 
 }

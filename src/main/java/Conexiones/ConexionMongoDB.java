@@ -1,11 +1,16 @@
 package Conexiones;
 
+import ClasesMongo.CentrosDeProyectoMongo;
+import ClasesMongo.CentrosMongo;
 import CreacionInicialBDSQL.Leer;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 import org.bson.Document;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -19,7 +24,7 @@ public class ConexionMongoDB {
     final static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-
+        InsertCentro();
         int opcion;
         do {
             opcion = menu();
@@ -46,7 +51,7 @@ public class ConexionMongoDB {
         //este metodo nos permite mostrar por pantalla los nombres de los usuarios
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase db = mongoClient.getDatabase("FactoriaProyectosFP2");
-            String nombre = Leer.pedirCadena("Intoduce el nombre del Proyecto que quieres leer: ");
+            String nombre = Leer.pedirCadena("Introduce el nombre del Proyecto que quieres leer: ");
 
             Iterable<Document> agProyectos = db.getCollection("Proyectos").aggregate(Arrays.asList(Aggregates.
                     lookup("Usuarios",nombre,"_id","datosUsuarios")));
@@ -61,6 +66,8 @@ public class ConexionMongoDB {
     public static void insertardatos() {
         boolean clave=false;
         //este metodo nos permite insertar datos en la coleccion de centros
+
+
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             MongoDatabase db = mongoClient.getDatabase("FactoriaProyectosFP2");
             MongoCollection<Document> collection = db.getCollection("Centros");
@@ -113,33 +120,25 @@ public class ConexionMongoDB {
             System.out.println(e);
         }
     }
-/*
-    public static void MongoClases(){
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
 
+    public static void InsertCentro(){
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
             CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
             CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
 
-            MongoDatabase db = mongoClient.getDatabase("examen").withCodecRegistry( codecRegistry);;
+            MongoDatabase db = mongoClient.getDatabase("FactoriaProyectosFP2").withCodecRegistry( codecRegistry);;
 
-            MongoCollection<Empleado> Empleados = db.getCollection("empleados", Empleado.class);
-            MongoCollection<Departamento> departamentos = db.getCollection("departamentos", Departamento.class);
+            MongoCollection<CentrosMongo> CentrosMongo = db.getCollection("centros", ClasesMongo.CentrosMongo.class);
 
-            Departamento departamento = departamentos.find(eq("nombre", "Java Departamento")).first();
-            for (Departamento dep :departamentos.find()) {
-                System.out.println(dep.getId());
-            }
-
-            System.out.println(departamento.getId());
-            Empleado empleado=new Empleado();
-            empleado.setNombre("Hola Jordi");
-            empleado.setSalario(99.9);
-            empleado.setDepartamento_id(departamento.getId());
-            Empleados.insertOne(empleado);
-
+            CentrosMongo centro=new CentrosMongo();
+            centro.setNombre("Ies San Alberto Magno");
+            centro.setWeb("0");
+            centro.setContacto("Javier Fernandez");
+            centro.setActivo(true);
+            CentrosMongo.insertOne(centro);
         } catch (MongoException e) {
             System.out.println(e);
         }
-    }*/
+    }
 
 }

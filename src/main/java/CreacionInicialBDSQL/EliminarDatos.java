@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class EliminarDatos {
     final static Scanner sc = new Scanner(System.in);
 
-    public static void MenuEliminacion(Connection connection) {
+    public static void MenuEliminacion(Connection connection) throws SQLException {
         int opcion;
         do {
             opcion = menu();
@@ -29,9 +29,9 @@ public class EliminarDatos {
     }
 
 
+    //Metodo para eliminar proyectos con su id
+    public static void EliminarProyecto(Connection connection) throws SQLException {
 
-    public static void EliminarProyecto(Connection Connection) {
-        try (Connection connection = Connection) {
             int id_Proyecto;
             id_Proyecto = Leer.pedirEntero("Introduce el Identificador del proyecto: ");
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM Proyectos WHERE PROYECTO_ID=?");
@@ -40,15 +40,11 @@ public class EliminarDatos {
             if (resultSet.next()) {
                 ps = connection.prepareStatement("DELETE FROM Proyectos WHERE PROYECTO_ID=?");
                 ps.setInt(1, id_Proyecto);
-                ps.executeQuery();
+                ps.execute();
                 System.out.println("Eliminacion realizada");
             } else {
-                System.out.println("Eliminacion no completada");
+                System.out.println("Eliminacion no completada, no existe el proyecto");
             }
-        } catch (SQLException e) {
-            System.out.println("Error Sql");
-            throw new RuntimeException(e);
         }
-    }
 
 }

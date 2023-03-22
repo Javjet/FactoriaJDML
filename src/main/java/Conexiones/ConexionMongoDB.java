@@ -24,7 +24,6 @@ public class ConexionMongoDB {
     final static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        InsertCentro();
         int opcion;
         do {
             opcion = menu();
@@ -120,7 +119,7 @@ public class ConexionMongoDB {
             System.out.println(e);
         }
     }
-
+/*
     public static void InsertCentro(){
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
@@ -139,6 +138,6 @@ public class ConexionMongoDB {
         } catch (MongoException e) {
             System.out.println(e);
         }
-    }
+    }*/
 
 }

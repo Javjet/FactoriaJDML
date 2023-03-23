@@ -165,7 +165,8 @@ public class ConexionExist_DB {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("No existe la base de datos");
+            //System.out.println(e.getMessage());
         }finally {
             if (collection!=null)
             collection.close();

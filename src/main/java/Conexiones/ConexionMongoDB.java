@@ -63,12 +63,11 @@ public class ConexionMongoDB {
                     createColCenter = false;
                 }
 
-                if (nombre.equalsIgnoreCase( "Proyectos")) {
+                if (nombre.equalsIgnoreCase("Proyectos")) {
                     createColProyect = false;
                 }
 
             }
-            System.out.println(createColUser);
             if (createColUser)
                 db.createCollection("Usuarios");
             if (createColCenter)
@@ -109,25 +108,31 @@ public class ConexionMongoDB {
             MongoDatabase db = mongoClient.getDatabase("FactoriaProyectosFP2").withCodecRegistry(codecRegistry);
 
             MongoCollection<CentrosMongo> CentrosMongo = db.getCollection("Centros", ClasesMongo.CentrosMongo.class);
-            String nombreCentro=Leer.pedirCadena("Introduzca el nombre del centro que quiere modificar");
-            CentrosMongo centro = CentrosMongo.find(eq("nombre", nombreCentro),CentrosMongo.class).first();
-            if (Leer.pedirCadena("Introduzca \"si\" para modificar el nombre del centro").equalsIgnoreCase("SI")){
-                centro.setNombre(Leer.pedirCadena("Introduzca el nombre del centro"));
+            String nombreCentro = Leer.pedirCadena("Introduzca el nombre del centro que quiere modificar");
+            CentrosMongo centro = CentrosMongo.find(eq("nombre", nombreCentro), CentrosMongo.class).first();
+            if (centro != null) {
+                if (Leer.pedirCadena("Introduzca \"si\" para modificar el nombre del centro").equalsIgnoreCase("SI")) {
+                    centro.setNombre(Leer.pedirCadena("Introduzca el nombre del centro"));
+                }
+                if (Leer.pedirCadena("Introduzca \"si\" para modificar la Web del centro").equalsIgnoreCase("SI")) {
+                    centro.setWeb(Leer.pedirCadena("Introduzca la Web del centro"));
+                }
+                if (Leer.pedirCadena("Introduzca \"si\" para modificar el Coordinador del centro").equalsIgnoreCase("SI")) {
+                    centro.setContacto(Leer.pedirCadena("Introduzca el Coordinador del centro"));
+                }
+                CentrosMongo.replaceOne(eq("nombre", nombreCentro), centro);
+            }else {
+                System.out.println("El archivo que desea modificar no existe");
             }
-            if (Leer.pedirCadena("Introduzca \"si\" para modificar la Web del centro").equalsIgnoreCase("SI")){
-                centro.setWeb(Leer.pedirCadena("Introduzca la Web del centro"));
-            }
-            if (Leer.pedirCadena("Introduzca \"si\" para modificar el Coordinador del centro").equalsIgnoreCase("SI")){
-                centro.setContacto(Leer.pedirCadena("Introduzca el Coordinador del centro"));
-            }
-            CentrosMongo.replaceOne(eq("nombre", nombreCentro), centro);
         } catch (MongoException e) {
             System.out.println(e);
+        }catch (org.bson.codecs.configuration.CodecConfigurationException c){
+            System.out.println("La version del objeto que intenta recuperar esta desactualizada");
         }
     }
 
     //Metodo para eliminar un centro
-    public static void DeleteCentro(){
+    public static void DeleteCentro() {
         try (MongoClient mongoClient = MongoClients.create(uri)) {
             CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
             CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
@@ -135,7 +140,7 @@ public class ConexionMongoDB {
             MongoDatabase db = mongoClient.getDatabase("FactoriaProyectosFP2").withCodecRegistry(codecRegistry);
 
             MongoCollection<CentrosMongo> CentrosMongo = db.getCollection("Centros", ClasesMongo.CentrosMongo.class);
-            CentrosMongo.deleteOne(eq("nombre",Leer.pedirCadena("Introduzca el nombre del centro que eliminar")));
+            CentrosMongo.deleteOne(eq("nombre", Leer.pedirCadena("Introduzca el nombre del centro que eliminar")));
         } catch (MongoException e) {
             System.out.println(e);
         }
